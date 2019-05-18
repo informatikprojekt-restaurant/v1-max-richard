@@ -5,17 +5,11 @@ public class Gerichte extends Angebot {
     String bezeichnung;
     int ID;
     double preis;
-    Vorrat[] zutatenliste;
     
     public Gerichte(String n, int nbr, double p){
         bezeichnung = n;
         ID = nbr;
         preis = p;
-        zutatenliste = new Vorrat[3];
-    }
-    
-    public void bestellen(){
-        
     }
     
     public void datenAusgeben(){
@@ -23,6 +17,10 @@ public class Gerichte extends Angebot {
     }
     
     public int IDGeben(){
-        
+        return ID;
+    }
+    
+    public double preisGeben() {
+        return preis;
     }
 }
