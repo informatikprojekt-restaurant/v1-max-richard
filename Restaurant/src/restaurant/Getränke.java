@@ -1,5 +1,9 @@
 package restaurant;
-//author @Richard
+
+/**
+ *
+ * @author Richard Wimmer
+ */
 public class Getränke extends Angebot{
     
     String bezeichnung;

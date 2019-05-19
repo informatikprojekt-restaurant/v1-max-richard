@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package restaurant;
 import java.util.Random;
 
@@ -15,11 +10,13 @@ public class Bestellung {
     private int bestellNummer;
     private Speisekarte s;
     private Angebot[] auswahl;
+    Tisch auftraggeber;
     
-    Bestellung (int nr,int anzahl)
+    Bestellung (int nr,int anzahl, Tisch t)
     {
         bestellNummer=nr;
         Random number = new Random();
+        auftraggeber = t;
         
         for (int i=0;i<anzahl;i++)
         {

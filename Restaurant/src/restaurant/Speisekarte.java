@@ -1,6 +1,9 @@
-
 package restaurant;
-//author @Max
+
+/**
+ *
+ * @author Max Demel
+ */
 public class Speisekarte {
      public Angebot[] speisekarte;
      

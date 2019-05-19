@@ -1,5 +1,9 @@
 package restaurant;
-//autor @Max
+
+/**
+ *
+ * @author Max Demel
+ */
 public class Vorrat {
         int zutatsID;
         String name;

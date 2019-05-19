@@ -1,5 +1,9 @@
 package restaurant;
-//author Richard
+
+/**
+ *
+ * @author Richard Wimmer
+ */
 public abstract class Angebot {
     abstract void datenAusgeben();
     abstract int IDGeben();
