@@ -25,6 +25,10 @@ public class Tisch {
         besetzt=be;
     }
     
+    public void datenAusgeben() {
+        System.out.println("Tisch " + tischnr + " Gästezahl: "+ besetzt + " von " + stuhlzahl);
+    }
+    
     public void gehendeGäste()
     {
         besetzt=0;
@@ -37,8 +41,12 @@ public class Tisch {
     
     public Bestellung bestellungAufgeben()
     {
-        Bestellung b = new Bestellung(tischnr,stuhlzahl, this);
-        return b;
+        if (besetzt != 0) {
+            Bestellung b = new Bestellung(tischnr, besetzt, this);
+            return b;
+        } else {
+            return null;
+        }
     }
     
 }

@@ -22,7 +22,7 @@ public class Getränke extends Angebot{
     }
     
     public void datenAusgeben(){
-        
+        System.out.println(ID + bezeichnung + preis + " | ");
     }
     
     public int IDGeben(){

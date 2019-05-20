@@ -10,31 +10,30 @@ public class Bestellung {
     private int bestellNummer;
     private Speisekarte s;
     private Angebot[] auswahl;
-    Tisch auftraggeber;
+    private Tisch auftraggeber;
     
     Bestellung (int nr,int anzahl, Tisch t)
     {
         bestellNummer=nr;
         Random number = new Random();
         auftraggeber = t;
+        auswahl = new Angebot[anzahl * 2];
         
         for (int i=0;i<anzahl;i++)
         {
-            int n = number.nextInt(10)+1; //GerichteIndizes
+            int n = number.nextInt(9)+1; //GerichteIndizes
             auswahl[i]=s.speisekarte[n];
-        }
-        
-        for (int i=anzahl;i<anzahl*2;i++)
-        {
-            int m = number.nextInt(20)+11;//GetränkIndize
-            auswahl[i]=s.speisekarte[m];
+            int m = number.nextInt(4)+11;//GetränkIndize
+            auswahl[i + anzahl]=s.speisekarte[m];
         }
         
     }
     
     public void inhaltAusgeben()
     {
-        
+        for(int i= 0;i<auswahl.length;i++) {
+            auswahl[i].datenAusgeben();
+        }
     }
     
     public double preisBerechnen()
@@ -44,6 +43,11 @@ public class Bestellung {
             gesamtpreis = auswahl[i].preisGeben()+gesamtpreis;
         }
         return gesamtpreis;
+    }
+    
+    public int elementanzahlGeben()
+    {
+        return auswahl.length;
     }
     
 }
