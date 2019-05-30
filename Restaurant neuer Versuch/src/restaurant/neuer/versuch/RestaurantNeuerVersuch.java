@@ -19,14 +19,45 @@ public class RestaurantNeuerVersuch {
         Restaurant r = new Restaurant(5);
         
         r.tischDatenAusgeben();
+        
+        System.out.println();
+        
         r.kundenKommen();
         r.tischDatenAusgeben();
+        
+        System.out.println();
+        
         r.kundenKommen();
         r.tischDatenAusgeben();
+        
+        System.out.println();
+        
         r.kundenGehen(1);
         r.tischDatenAusgeben();
+        
+        System.out.println();
+        
+        r.bestellungErstellen(1);
         r.bestellungErstellen(2);
-        r.zuBearbeitendeBestellungenAusgeben();
+        r.bestellungErstellen(3);
+        r.bestellungErstellen(4);
+        r.bestellungErstellen(0);
+        
+        System.out.println();
+        
+        r.unbearbeiteteBestellungenAusgeben();
+        
+        System.out.println();
+        
+        r.bearbeiteBestellung();
+        
+        System.out.println();
+        
+        r.unbearbeiteteBestellungenAusgeben();
+        
+        System.out.println();
+        
+        r.bearbeiteteBestellungenAusgeben();
         
     }
     

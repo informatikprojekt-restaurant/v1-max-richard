@@ -49,6 +49,8 @@ public class Tisch {
         System.out.println("Tisch " + tischnr + ": Gästezahl = "+ besetzt + " von " + stuhlzahl);
     }
     
-    
+    public int tischNummerGeben() {
+        return tischnr;
+    }
     
 }

@@ -5,6 +5,7 @@
  */
 package restaurant.neuer.versuch;
 import java.util.Random;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,19 +18,20 @@ public class Bestellung {
     private Tisch auftraggeber;
     private Random number;
     
-    public Bestellung(int ID, Tisch t, Angebot[] speisekarte) {
-        bestellID = ID;
+    public Bestellung(int ID, Tisch t, ArrayList<Angebot> speisekarte) {
+        bestellID = ID + 1;
         auftraggeber = t;
         auswahl = new Angebot[auftraggeber.gaesteZahlGeben() * 2];
         number = new Random();
         
         for(int i = 0; i < (auftraggeber.gaesteZahlGeben()); i++) {
-            auswahl[i] = speisekarte[number.nextInt(9) + 1];
-            auswahl[i + auftraggeber.gaesteZahlGeben()] = speisekarte[number.nextInt(4) + 11];
+            auswahl[i] = speisekarte.get(number.nextInt(9) + 1);
+            auswahl[i + auftraggeber.gaesteZahlGeben()] = speisekarte.get(number.nextInt(3) + 11);
         }
     }
     
     public void inhaltAusgeben() {
+        System.out.println("Bestellung " + bestellID);
         for(int i = 0; i < auswahl.length; i++) {
             auswahl[i].datenAusgeben();
         }
@@ -45,6 +47,18 @@ public class Bestellung {
     
     public int elementAnzahlGeben() {
         return auswahl.length;
+    }
+    
+    public Tisch auftraggeberGeben() {
+        return auftraggeber;
+    }
+    
+    public int bestellIDGeben() {
+        return bestellID;
+    }
+    
+    public Angebot inhaltGeben(int index) {
+        return auswahl[index];
     }
     
 }

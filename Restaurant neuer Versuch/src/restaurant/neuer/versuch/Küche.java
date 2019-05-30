@@ -21,12 +21,14 @@ public class Küche {
     }
     
     public void bestellungAufnehmen(Bestellung b) {
+        boolean istEingereiht = false;
         for(int i = 0; i < bearbeitungsliste.length; i++) {
-            if(bearbeitungsliste[i] == null) {
+            if(bearbeitungsliste[i] == null && !istEingereiht) {
                 bearbeitungsliste[i] = b;
-                System.out.println("Die Bestellung wurde erfolgreich auf dem " + (i + 1) + ". Platz eingereit");
+                System.out.println("Die Bestellung von Tisch " + (b.auftraggeberGeben()).tischNummerGeben() + " wurde erfolgreich auf dem " + (i + 1) + ". Platz eingereit");
+                istEingereiht = !istEingereiht;
             } else {
-                if (i == (bearbeitungsliste.length - 1)) {
+                if (i == (bearbeitungsliste.length - 1) && !istEingereiht) {
                     System.out.println("Die Warteschlange ist voll!");
                 }
             }
@@ -38,6 +40,7 @@ public class Küche {
             for(int i=0; i<bearbeitungsliste.length; i++){
                 if(bearbeitungsliste[i] != null) {
                     bearbeitungsliste[i].inhaltAusgeben();
+                    System.out.println();
                 }
             }
         } else {
@@ -46,7 +49,20 @@ public class Küche {
     }
     
     public void bestellungBearbeiten() {
-        //besetllung angebot für angebot entsprechend den Zeiten durcharbeiten und bestellung in leistungsliste einfuegen
+        if(bearbeitungsliste[0] != null) {
+            System.out.println("Bestellung " + bearbeitungsliste[0].bestellIDGeben() + " wird nun bearbeitet!");
+            for(int i = 0; i < bearbeitungsliste[0].elementAnzahlGeben(); i++){
+                CitchenClock cc = new CitchenClock();
+                cc.run((bearbeitungsliste[0].inhaltGeben(i)).zubereitungsZeitGeben());
+                System.out.println("Zu " + ((double)i + 1) / ((double)bearbeitungsliste[0].elementAnzahlGeben()) * 100 + "% fertiggestellt!");
+            }
+            leistungsliste.add(bearbeitungsliste[0]);
+            for(int i = 0; (i + 1) < bearbeitungsliste.length; i++) {
+                bearbeitungsliste[i] = bearbeitungsliste[i+1];
+            }
+        } else {
+            System.out.println("Keine Bestellungen zur Bearbeitung vorhanden");
+        }
     }
     
     public int anzahlBestellungenGeben() {
@@ -62,6 +78,13 @@ public class Küche {
             }
         }
         return anz;
+    }
+    
+    public void fertigeBestellungenAusgeben() {
+        for(int i = 0; i < leistungsliste.size(); i++) {
+            leistungsliste.get(i).inhaltAusgeben();
+            System.out.println();
+        }
     }
     
 }
