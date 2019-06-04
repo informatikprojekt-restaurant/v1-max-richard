@@ -10,23 +10,26 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.*;
+import java.awt.geom.*;
 
 /**
  *
- * @author Thomas Weber
+ * @author Max Demel, Thomas Weber
  */
 public class Oberflaeche {
-    
-    public Oberflaeche(int tz) {
+    public Restaurant r;
+    public Oberflaeche(Restaurant rs) {
         
         //neues Restaurant
-        Restaurant r = new Restaurant(tz);
+         r = rs;
         
         //neues Fenster
         JFrame f1 = new JFrame("Restaurant Simulation");
-        
+        f1.setVisible(true);
+        f1.setBounds(500,500,3000,1500);
         //neue Knöpfe
         
     }
+    
     
 }

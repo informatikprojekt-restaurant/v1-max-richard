@@ -10,14 +10,14 @@ package restaurant.neuer.versuch;
  * @author Thomas Weber
  */
 public class RestaurantNeuerVersuch {
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
         Restaurant r = new Restaurant(5);
-        
+        Oberflaeche o = new Oberflaeche(r);
         r.tischDatenAusgeben();
         
         System.out.println();
