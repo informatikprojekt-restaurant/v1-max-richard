@@ -1,13 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package restaurant;
 
 /**
  *
- * driver Richard Wimmer
- * 
+ * @author Thomas Weber
  */
-public abstract class Angebot {
-    abstract void datenAusgeben();
-    abstract int IDGeben();
-    abstract double preisGeben();
+public class Angebot {
+    
 }
-

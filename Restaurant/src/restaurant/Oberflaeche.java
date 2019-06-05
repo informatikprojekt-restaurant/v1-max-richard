@@ -9,6 +9,6 @@ package restaurant;
  *
  * @author Thomas Weber
  */
-public class Bestellung {
+public class Oberflaeche {
     
 }
