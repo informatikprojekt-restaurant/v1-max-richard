@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package restaurant.neuer.versuch;
 import java.util.Random;
 import java.util.Arraylist
@@ -12,12 +7,12 @@ import java.util.Arraylist
  * @author Richard Wimmer
  */
 public class Bestellung {
-    private int bestellungID;
+    private int bestellID;
     private Angebot[] auswahl;
     private Tisch auftraggeber;
     private Random number;
     
-    public Bestellung(int ID, Tisch t, ArrayList<Angebot> speisekarte)
+    public Bestellung(int ID, Tisch t, Angebot[] speisekarte)
     {
         bestellID = ID + 1;
         auftraggeber = t;
@@ -33,7 +28,7 @@ public class Bestellung {
     
     public void inhaltAusgeben()
     {
-        System.out.println("Bestellung " + bestellID);
+        System.out.println("Bestellung " + bestellID + " von Tisch " auftraggeber.tischNummerGeben());
         for(int i = 0; i < auswahl.length; i++)
         {
             auswahl[i].datenAusgeben();
@@ -68,6 +63,15 @@ public class Bestellung {
     public Angebot inhaltGeben(int index)
     {
         return auswahl[index];
+    }
+    
+    public int bearbeitungsZeitGeben() 
+    {
+        int bearbeitungszeit = 0;
+        for (int i = 0; i < auswahl.length; i++) 
+        {
+            bearbeitungszeit = bearbeitungszeit + auswahl[i].zubereitungsZeitGeben();
+        }
     }
     
 }
