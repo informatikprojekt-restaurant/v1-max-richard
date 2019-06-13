@@ -6,12 +6,12 @@ import java.util.Random;
  * @author Katharina Lainer
  */
 public class Tisch {
-public class Tisch{
 
     private int stuhlzahl;
     private int tischnr;
     private int besetzt;
     private Random number;
+    private boolean bestellt;
 
     public Tisch (int sz, int nr){
 
@@ -19,17 +19,14 @@ public class Tisch{
         tischnr = nr;
         besetzt = 0;
         number = new Random();
+        bestellt = false;
     }
 
-    public boolean gaesteKommen (int anzahl){
+    public void gaesteKommen (int anzahl){
 
-        if(stuhlzahl < anzahl){
-
-            return false;
-        }else{
+        if(anzahl < stuhlzahl){
 
             besetzt = anzahl;
-            return true;
         }
     }
 
