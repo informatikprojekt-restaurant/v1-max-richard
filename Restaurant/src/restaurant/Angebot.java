@@ -13,12 +13,12 @@ public class Angebot {
     boolean istGetraenk;
     int zubereitungsZeit;
     
-    public Angebot(String n, int nbr, double p, boolean getraenk, int zeit){
+    public Angebot(String n, int nbr, double p, boolean b, int z){
         name = n;
         ID = nbr;
         preis = p;
-        istGetraenk = getraenk;
-        zubereitungsZeit=zeit;
+        istGetraenk = b;
+        zubereitungsZeit = z;
     }
     
     public void datenAusgeben(){
