@@ -1,6 +1,5 @@
-package restaurant.neuer.versuch;
+package restaurant;
 import java.util.Random;
-import java.util.Arraylist
 
 /**
  *
@@ -21,14 +20,14 @@ public class Bestellung {
         
         for(int i = 0; i < (auftraggeber.gaesteZahlGeben()); i++)
         {
-            auswahl[i] = speisekarte.get(number.nextInt(9) + 1);
-            auswahl[i + auftraggeber.gaesteZahlGeben()] = speisekarte.get(number.nextInt(3) + 11);
+            auswahl[i] = speisekarte[number.nextInt(9) + 1];
+            auswahl[i + auftraggeber.gaesteZahlGeben()] = speisekarte[number.nextInt(3) + 11];
         }
     }
     
     public void inhaltAusgeben()
     {
-        System.out.println("Bestellung " + bestellID + " von Tisch " auftraggeber.tischNummerGeben());
+        System.out.println("Bestellung " + bestellID + " von Tisch " + auftraggeber.tischNummerGeben());
         for(int i = 0; i < auswahl.length; i++)
         {
             auswahl[i].datenAusgeben();
@@ -72,6 +71,7 @@ public class Bestellung {
         {
             bearbeitungszeit = bearbeitungszeit + auswahl[i].zubereitungsZeitGeben();
         }
+        return bearbeitungszeit;
     }
     
 }

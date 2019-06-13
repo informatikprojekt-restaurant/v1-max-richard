@@ -4,7 +4,7 @@ package restaurant;
  *
  * @author Thomas Weber
  */
-public class CitchenClock {
+public class CitchenClock extends Thread {
     
     public int i = 0;
 

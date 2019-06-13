@@ -54,4 +54,13 @@ public class Tisch {
 
         return tischnr;
     }
+    
+    public boolean bestelltGeben() {
+        return bestellt;
+    }
+    
+    public void bestelltSetzen(boolean b) {
+        bestellt = b;
+    }
+    
 }
