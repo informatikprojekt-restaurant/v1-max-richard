@@ -11,8 +11,8 @@ public class Kueche {
     private Bestellung[] bearbeitungsliste;
     private ArrayList<Bestellung> leistungsliste;
     
-    public Kueche(int Kapazität){
-        bearbeitungsliste = new Bestellung[Kapazität];
+    public Kueche(int Kapazitaet){
+        bearbeitungsliste = new Bestellung[Kapazitaet];
         leistungsliste= new ArrayList<Bestellung>(0);
     }
     
