@@ -11,4 +11,17 @@ package restaurant;
  */
 public class CitchenClock {
     
+    public int i = 0;
+
+    public void run(int dauer){
+        while(i < dauer){
+            try{
+                i++;
+                sleep(100);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+    }
+    
 }
