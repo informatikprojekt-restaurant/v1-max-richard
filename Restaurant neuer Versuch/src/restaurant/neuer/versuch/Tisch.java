@@ -11,46 +11,69 @@ import java.util.Random;
  * @author Thomas Weber
  */
 public class Tisch {
-    
+
     private int stuhlzahl;
     private int tischnr;
     private int besetzt;
     private Random number;
-    
-    public Tisch(int sz, int nr) {
+    private int bestellt;
+
+    public Tisch (int sz, int nr){
+
         stuhlzahl = sz;
         tischnr = nr;
         besetzt = 0;
         number = new Random();
+        bestellt = 0;
     }
-    
-    public boolean gaesteKommen(int anzahl) {
-        if(stuhlzahl < anzahl) {
-            return false;
+
+    public void gaesteKommen(int anzahl) {
+        if(stuhlzahl < anzahl && besetzt != 0) {
+            System.out.println(anzahl + "kein platz an tisch " + tischnr);
         } else {
             besetzt = anzahl;
-            return true;
+            bestellt = 1;
+            System.out.println(besetzt + "sitzt an tisch " + tischnr);
         }
     }
     
-    public void gaesteGehen() {
-        besetzt = 0;
+    public void gaesteGehen(){
+        if (bestellt == 3) {
+            besetzt = 0;
+            bestellt = 0;
+        }
     }
-    
-    public int stuhlZahlGeben() {
+
+    public int stuhlZahlGeben(){
+
         return stuhlzahl;
     }
-    
-    public int gaesteZahlGeben() {
+
+    public int gaesteZahlGeben(){
+
         return besetzt;
     }
-    
-    public void datenAusgeben() {
-        System.out.println("Tisch " + tischnr + ": Gästezahl = "+ besetzt + " von " + stuhlzahl);
+
+    public void datenAusgeben(){
+
+        System.out.println("Tisch " + tischnr + ": Gästezahl = " + besetzt + " von " + stuhlzahl);
+    }
+
+    public int tischNummerGeben(){
+
+        return tischnr;
     }
     
-    public int tischNummerGeben() {
-        return tischnr;
+    public int bestelltGeben() {
+        return bestellt;
+    }
+    
+    public void bestelltSetzen(int b) {
+        bestellt = b;
+    }
+    
+    public String datenGeben() {
+        return ("Tisch " + tischnr + ": Gästezahl = " + besetzt + " von " + stuhlzahl);
     }
     
 }

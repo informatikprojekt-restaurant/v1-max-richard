@@ -5,60 +5,27 @@
  */
 package restaurant.neuer.versuch;
 
+import javax.swing.*;
+
 /**
  *
  * @author Thomas Weber
  */
 public class RestaurantNeuerVersuch {
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Restaurant r = new Restaurant(5);
-        
-        r.tischDatenAusgeben();
-        
-        System.out.println();
-        
-        r.kundenKommen();
-        r.tischDatenAusgeben();
-        
-        System.out.println();
-        
-        r.kundenKommen();
-        r.tischDatenAusgeben();
-        
-        System.out.println();
-        
-        r.kundenGehen(1);
-        r.tischDatenAusgeben();
-        
-        System.out.println();
-        
-        r.bestellungErstellen(1);
-        r.bestellungErstellen(2);
-        r.bestellungErstellen(3);
-        r.bestellungErstellen(4);
-        r.bestellungErstellen(0);
-        
-        System.out.println();
-        
-        r.unbearbeiteteBestellungenAusgeben();
-        
-        System.out.println();
-        
-        r.bearbeiteBestellung();
-        
-        System.out.println();
-        
-        r.unbearbeiteteBestellungenAusgeben();
-        
-        System.out.println();
-        
-        r.bearbeiteteBestellungenAusgeben();
-        
+        int tz = Integer.parseInt(JOptionPane.showInputDialog("Gib die Anzahl der Tische - zwischen 1 und 10 -  an, die im Restaurant stehen sollen an: "));
+        while (tz>10){
+            JOptionPane.showMessageDialog(null, "Die Zahl war zu groß!");
+            tz = Integer.parseInt(JOptionPane.showInputDialog("Gib die Anzahl der Tische - zwischen 1 und 10 -  an, die im Restaurant stehen sollen an: "));
+        }
+        Simulation s = new Simulation(tz, new double[0]);
+        boolean restart = s.start();
+        if (restart){
+            s = new Simulation(s.restaurantGeben().tischzahlGeben(), s.restaurantGeben().einnahmenListeGeben());
+        }
     }
-    
 }

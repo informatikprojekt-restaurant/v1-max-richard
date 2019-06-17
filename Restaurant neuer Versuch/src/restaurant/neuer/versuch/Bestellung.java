@@ -5,60 +5,90 @@
  */
 package restaurant.neuer.versuch;
 import java.util.Random;
-import java.util.ArrayList;
+
 
 /**
  *
  * @author Thomas Weber
  */
 public class Bestellung {
-    
     private int bestellID;
     private Angebot[] auswahl;
     private Tisch auftraggeber;
     private Random number;
     
-    public Bestellung(int ID, Tisch t, ArrayList<Angebot> speisekarte) {
+    public Bestellung(int ID, Tisch t, Angebot[] speisekarte)
+    {
         bestellID = ID + 1;
         auftraggeber = t;
         auswahl = new Angebot[auftraggeber.gaesteZahlGeben() * 2];
         number = new Random();
         
-        for(int i = 0; i < (auftraggeber.gaesteZahlGeben()); i++) {
-            auswahl[i] = speisekarte.get(number.nextInt(9) + 1);
-            auswahl[i + auftraggeber.gaesteZahlGeben()] = speisekarte.get(number.nextInt(3) + 11);
+        for(int i = 0; i < (auftraggeber.gaesteZahlGeben()); i++)
+        {
+            auswahl[i] = speisekarte[number.nextInt(9) + 1];
+            auswahl[i + auftraggeber.gaesteZahlGeben()] = speisekarte[number.nextInt(3) + 11];
         }
+        
+        t.bestelltSetzen(2);
     }
     
-    public void inhaltAusgeben() {
-        System.out.println("Bestellung " + bestellID);
-        for(int i = 0; i < auswahl.length; i++) {
+    public void inhaltAusgeben()
+    {
+        System.out.println("Bestellung " + bestellID + " von Tisch " + auftraggeber.tischNummerGeben());
+        for(int i = 0; i < auswahl.length; i++)
+        {
             auswahl[i].datenAusgeben();
         }
     }
     
-    public double bestellungsPreisGeben() {
+    public double bestellungsPreisGeben()
+    {
         double gesamtpreis = 0;
-        for (int i = 0; i < auswahl.length; i++) {
+        for (int i = 0; i < auswahl.length; i++)
+        {
             gesamtpreis = auswahl[i].preisGeben() + gesamtpreis;
         }
         return gesamtpreis;
     }
     
-    public int elementAnzahlGeben() {
+    public int elementAnzahlGeben()
+    {
         return auswahl.length;
     }
     
-    public Tisch auftraggeberGeben() {
+    public Tisch auftraggeberGeben()
+    {
         return auftraggeber;
     }
     
-    public int bestellIDGeben() {
+    public int bestellIDGeben()
+    {
         return bestellID;
     }
     
-    public Angebot inhaltGeben(int index) {
+    public Angebot inhaltGeben(int index)
+    {
         return auswahl[index];
+    }
+    
+    public int bearbeitungsZeitGeben() 
+    {
+        int bearbeitungszeit = 0;
+        for (int i = 0; i < auswahl.length; i++) 
+        {
+            bearbeitungszeit = bearbeitungszeit + auswahl[i].zubereitungsZeitGeben();
+        }
+        return bearbeitungszeit;
+    }
+    
+    public String[] alleDatenGeben() {
+        String[] s = new String[auswahl.length + 1];
+        s[0] = ("Bestellung " + bestellID + " von Tisch " + auftraggeber.tischNummerGeben());
+        for(int i = 0; i < auswahl.length; i++) {
+            s[i + 1] = auswahl[i].datenGeben();
+        }
+        return s;
     }
     
 }
