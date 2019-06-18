@@ -69,6 +69,10 @@ public class Restaurant {
         System.out.println("Es war kein Platz für " + anzahl + " Gäste!");
     }
     
+    public void kundenKommenManuell(Tisch t) {
+        t.gaesteKommen(number.nextInt(t.stuhlZahlGeben()-2) + 2);
+    }
+    
     public void kundenGehen() {
         for(int i = 0; i<t.length; i++) {
             t[i].gaesteGehen();
@@ -99,6 +103,10 @@ public class Restaurant {
     
     public void bearbeiteBestellung() {
         k.bestellungBearbeiten();
+    }
+    
+    public void bearbeiteBestellungManuell(Tisch t) {
+        k.bestellungBearbeitenManuell(t);
     }
     
     public void bearbeiteteBestellungenAusgeben() {
@@ -146,7 +154,7 @@ public class Restaurant {
     public String[] bestellungenInBearbeitungGeben(){
        String[] s= new String[t.length];
        Bestellung[] b = k.ausstehendeBestellungenGeben();
-       for(int i=0; i<t.length;i++){
+       for(int i=0; i<s.length;i++){
            if(b[i]!=null){
                s[i]=("Bestellung "+b[i].bestellIDGeben()+ " von Tisch "+ b[i].auftraggeberGeben().tischNummerGeben());
            }

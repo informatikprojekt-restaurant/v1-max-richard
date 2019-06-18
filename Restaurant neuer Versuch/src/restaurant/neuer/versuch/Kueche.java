@@ -45,12 +45,6 @@ public class Kueche {
     
     public void bestellungBearbeiten() {
         if(bearbeitungsliste[0] != null) {
-            System.out.println("Bestellung " + bearbeitungsliste[0].bestellIDGeben() + " wird nun bearbeitet!");
-            for(int i = 0; i < bearbeitungsliste[0].elementAnzahlGeben(); i++){
-                CitchenClock cc = new CitchenClock();
-                cc.run(bearbeitungsliste[0].bearbeitungsZeitGeben());
-                System.out.println("fertig");
-            }
             bearbeitungsliste[0].auftraggeberGeben().bestelltSetzen(3);
             leistungsliste.add(bearbeitungsliste[0]);
             for(int i = 0; (i + 1) < bearbeitungsliste.length; i++) {
@@ -58,6 +52,18 @@ public class Kueche {
             }
         } else {
             System.out.println("Keine Bestellungen zur Bearbeitung vorhanden");
+        }
+    }
+    
+    public void bestellungBearbeitenManuell(Tisch t) {
+        for(int i = 0; i<bearbeitungsliste.length; i++) {
+            if(bearbeitungsliste[i].auftraggeberGeben() == t) {
+                t.bestelltSetzen(3);
+                leistungsliste.add(bearbeitungsliste[i]);
+                for(int j = i; (j+1) < bearbeitungsliste.length; j++) {
+                    bearbeitungsliste[j] = bearbeitungsliste[j+1];
+                }
+            }            
         }
     }
     
