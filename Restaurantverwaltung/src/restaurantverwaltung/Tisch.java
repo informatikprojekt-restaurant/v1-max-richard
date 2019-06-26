@@ -9,7 +9,6 @@ import java.util.Random;
 /**
  *
  * @author Thomas Weber
- * nur noch überarbeiten
  */
 public class Tisch {
 
@@ -17,18 +16,18 @@ public class Tisch {
     private int stuhlzahl;
     
     //tischnr gibt die Tischnummer des Tisches an
-    private int tischnr;
+    private int tischNr;
     
     //besetzt gibt an wieviele Gäste an dem Tisch sitzen
-    private int besetzt;
+    private int gaesteZahl;
     private Random number;
     private int zustand;
 
     public Tisch (int sz, int nr){
 
         stuhlzahl = sz;
-        tischnr = nr;
-        besetzt = 0;
+        tischNr = nr;
+        gaesteZahl = 0;
         number = new Random();
         zustand = 0;
         /*
@@ -42,19 +41,16 @@ public class Tisch {
 
     //Methode gaesteKommen setzt Gäste an den Tisch setzen
     public void gaesteKommen(int anzahl) {
-        if(stuhlzahl < anzahl && besetzt != 0) {
-            System.out.println(anzahl + "kein platz an tisch " + tischnr);
-        } else {
-            besetzt = anzahl;
+        if(stuhlzahl >= anzahl && gaesteZahl == 0 && zustand == 0) {
+            gaesteZahl = anzahl;
             zustand = 1;
-            System.out.println(besetzt + "sitzt an tisch " + tischnr);
         }
     }
     
     //Lässt die Gäste gehen, unter der Bedingung, dass diese bereits eine Bestellung aufgegeben haben und diese auch schon überarbeitet wurde
     public void gaesteGehen(){
         if (zustand == 3) {
-            besetzt = 0;
+            gaesteZahl = 0;
             zustand = 0;
         }
     }
@@ -68,13 +64,13 @@ public class Tisch {
     //Gibt die Anzahl der Gäste die an diesem Tisch sitzen
     public int gaesteZahlGeben(){
 
-        return besetzt;
+        return gaesteZahl;
     }
     
     //Gibt die Nummer des Tisches zurück
     public int tischNummerGeben(){
 
-        return tischnr;
+        return tischNr;
     }
     
     //Gibt den Zustand des Tisches zurück
@@ -89,7 +85,7 @@ public class Tisch {
     
     //Gibt die Daten des Tisches als String aus
     public String datenGeben() {
-        return ("Tisch " + tischnr + ": Gästezahl = " + besetzt + " von " + stuhlzahl);
+        return ("Tisch " + tischNr + ": Gästezahl = " + gaesteZahl + " von " + stuhlzahl);
     }
     
 }

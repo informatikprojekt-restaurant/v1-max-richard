@@ -103,22 +103,22 @@ public class Oberflaeche {
                 public void actionPerformed(ActionEvent e) {
                     switch(r.tischGeben(button.getTischNr()).zustandGeben()){
                         case 0:
-                            r.kundenKommen(r.tischGeben(button.getTischNr()));
+                            r.kundenKommen(button.getTischNr());
                             button.setBackground(Color.RED);
                             l[2].setText(r.tischGeben(button.getTischNr()).gaesteZahlGeben() + " Kunden haben sich an Tisch " + (button.getTischNr() + 1) + " gesetzt!");
                             break;
                         case 1:
-                            r.bestellungErstellen(r.tischGeben(button.getTischNr()));
+                            r.bestellungErstellen(button.getTischNr());
                             button.setBackground(Color.ORANGE);
-                            l[2].setText("Tisch " + (button.getTischNr() + 1) + " hat eine Bestellung aufgegeben!");
+                            l[2].setText("Tisch " + (button.getTischNr() + 1) + " hat eine Bestellung eingereicht!");
                             break;
                         case 2:
-                            r.bearbeiteBestellung(r.tischGeben(button.getTischNr()));
+                            r.bearbeiteBestellung(button.getTischNr());
                             button.setBackground(Color.GREEN);
                             l[2].setText("Die Bestellung von Tisch " + (button.getTischNr() + 1) + " wurde bearbeitet!");
                             break;
                         case 3:
-                            r.tischGeben(button.getTischNr()).gaesteGehen();
+                            r.kundenGehen(button.getTischNr());
                             button.setBackground(Color.GRAY);
                             l[2].setText("Die Kunden von Tisch " + (button.getTischNr() + 1) + " sind gegangen!");
                             break;
@@ -161,7 +161,7 @@ public class Oberflaeche {
             public void actionPerformed(ActionEvent e) {
                 int i = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie die nummer des Tisches, welcher die Bestellung aufgegeben hat an: "));
                 if(i <= r.tischzahlGeben() && r.tischGeben(i-1).zustandGeben() == 2){
-                    jl3 = new JList(r.inhaltUnbearbeiteteBestellungenGeben(i));
+                    jl3 = new JList(r.inhaltUnbearbeiteteBestellungGeben(i));
                     p1.add(jl3);
                     jl3.setBounds(0,650,250,250);
                     jl3.setBorder(new LineBorder(Color.BLACK));
@@ -179,7 +179,7 @@ public class Oberflaeche {
                         i = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie entweder 1 ein, wenn Sie eine neue Sequenz mit den bisherigen Einnahmen starten wollen oder 2, wenn Sie das Programm beenden wollen: "));
                     }
                     r.alleProzesseAbschließen();
-                    JOptionPane.showMessageDialog(null, "Die Einnahmen der letzten (" + r.sequenzAnzahlGeben() + ".) Sequenz waren " + r.sequenzEinnahmenGeben() + "€! Die Gesamteinnahmen waren " + r.gesamtEinnahmenGeben() + "€!");
+                    JOptionPane.showMessageDialog(null, "Die Einnahmen der letzten (" + r.sequenzAnzahlGeben() + ".) Sequenz liegen bei " + r.sequenzEinnahmenGeben() + "€! Die Gesamteinnahmen liegen bei " + r.gesamtEinnahmenGeben() + "€!");
                         switch(i-1) {
                             case 0:
                                 r = new Restaurant(r.tischzahlGeben(), r.einnahmenListeGeben());
@@ -204,7 +204,6 @@ public class Oberflaeche {
         jl2= new JList(r.bestellungenInBearbeitungGeben());
         jl2.setBounds(500, 400, 250, 250);
         jl2.setBorder(new LineBorder(Color.BLACK));
-        r.einnahmenAktuallisieren();
         l[0].setText("Bruttoeinnahmen: " + r.sequenzAnzahlGeben() + ". Sequenz: " + r.sequenzEinnahmenGeben() + "€");
         l[1].setText("Bruttoeinnahmen: " + r.sequenzAnzahlGeben() + " Sequenz(en): " + r.gesamtEinnahmenGeben() + "€");
         

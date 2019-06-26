@@ -35,6 +35,7 @@ public class Bestellung {
         t.zustandSetzen(2);
     }
     
+    //
     public double bestellungsPreisGeben()
     {
         double gesamtpreis = 0;
@@ -45,16 +46,19 @@ public class Bestellung {
         return gesamtpreis;
     }
     
+    //
     public Tisch auftraggeberGeben()
     {
         return auftraggeber;
     }
     
+    //
     public int bestellIDGeben()
     {
         return bestellID;
     }
     
+    //
     public String[] alleDatenGeben() {
         String[] s = new String[auswahl.length + 1];
         s[0] = ("Bestellung " + bestellID + " von Tisch " + auftraggeber.tischNummerGeben());

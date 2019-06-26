@@ -88,29 +88,33 @@ public class Restaurant {
         
     }
     
-    public void kundenKommen(Tisch t) {
-        t.gaesteKommen(number.nextInt(t.stuhlZahlGeben()-2) + 2);
+    //
+    public void kundenKommen(int tNr) {
+        t[tNr].gaesteKommen(number.nextInt(t[tNr].stuhlZahlGeben()-2) + 2);
     }
     
-    public void kundenGehen() {
-        for(int i = 0; i<t.length; i++) {
-            t[i].gaesteGehen();
-        }
+    //
+    public void kundenGehen(int tNr) {
+        t[tNr].gaesteGehen();
     }
     
-    public void bestellungErstellen(Tisch t) {
-        if(t.gaesteZahlGeben() != 0 && t.zustandGeben()==1) {
-            k.bestellungAufnehmen(new Bestellung(k.anzahlBestellungenGeben(), t, speisekarte));
+    //
+    public void bestellungErstellen(int tNr) {
+        if(t[tNr].zustandGeben()==1) {
+            k.bestellungAufnehmen(new Bestellung(k.anzahlBestellungenGeben(), t[tNr], speisekarte));
         } else {
-            System.out.println("Es sitzen keine Gaeste an Tisch " + t.tischNummerGeben());
+            System.out.println("Es sitzen keine Gaeste an Tisch " + t[tNr].tischNummerGeben());
+            
         }
     }
     
-    public void bearbeiteBestellung(Tisch t) {
-        k.bestellungBearbeitenManuell(t);
+    //
+    public void bearbeiteBestellung(int tNr) {
+        k.bestellungBearbeiten(t[tNr]);
     }
     
-    public String[] inhaltUnbearbeiteteBestellungenGeben(int i) {
+    //
+    public String[] inhaltUnbearbeiteteBestellungGeben(int i) {
         Bestellung[] b = k.ausstehendeBestellungenGeben();
         for(int j = 0; j < b.length; j++) {
             if (b[j].auftraggeberGeben().tischNummerGeben() == i) {
@@ -120,10 +124,12 @@ public class Restaurant {
         return null;
     }
     
+    //
     public int tischzahlGeben() {
         return t.length;
     }
     
+    //
     public Tisch tischGeben(int i) {
         if(i<t.length){
             return t[i];
@@ -132,59 +138,63 @@ public class Restaurant {
         }
     }
     
+    //
     public String[] besetzteStuehleGeben(){
-       String[] s= new String[t.length];
-       for(int i=0; i<t.length; i++){
+       String[] s = new String[t.length];
+       for(int i = 0; i < t.length; i++) {
            s[i]= t[i].datenGeben();
        }
-       
        return s;
     }
 
+    //
     public String[] bestellungenInBearbeitungGeben(){
-       String[] s= new String[t.length];
        Bestellung[] b = k.ausstehendeBestellungenGeben();
-       for(int i=0; i<s.length;i++){
-           if(b[i]!=null){
-               s[i]=("Bestellung "+b[i].bestellIDGeben()+ " von Tisch "+ b[i].auftraggeberGeben().tischNummerGeben());
+       String[] s = new String[b.length];
+       for(int i = 0; i < s.length; i++) {
+           if(b[i] != null){
+               s[i] = ("Bestellung " + b[i].bestellIDGeben() + " von Tisch " + b[i].auftraggeberGeben().tischNummerGeben() + " ist Eingereiht");
            }
        }
        return s;
     }
     
+    //
     public double sequenzEinnahmenGeben() {
+        einnahmen[einnahmen.length - 1] = k.gewinnGeben();
         return   Math.round(einnahmen[einnahmen.length-1] * 100) / 100.0;
     }
     
+    //
     public int sequenzAnzahlGeben() {
         return einnahmen.length;
     }
     
+    //
     public double gesamtEinnahmenGeben() {
         double e = 0;
+        einnahmen[einnahmen.length - 1] = k.gewinnGeben();
         for(int i = 0; i<einnahmen.length; i++) {
             e = e + einnahmen[i];
         }
         return Math.round(e * 100) / 100.0;
     }
     
-    public void einnahmenAktuallisieren() {
-        einnahmen[einnahmen.length-1] = k.gewinnGeben();
-    }
-    
+    //
     public double[] einnahmenListeGeben() {
         return einnahmen;
     }
     
+    //
     public void alleProzesseAbschließen() {
         for(int i = 0; i<t.length; i++) {
             switch(t[i].zustandGeben()) {
                 case 0:
                     break;
                 case 1:
-                    this.bestellungErstellen(t[i]);
+                    this.bestellungErstellen(i);
                 case 2:
-                    this.bearbeiteBestellung(t[i]);
+                    this.bearbeiteBestellung(i);
                 case 3:
                     t[i].gaesteGehen();
             }

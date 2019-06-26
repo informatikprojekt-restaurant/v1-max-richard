@@ -16,22 +16,19 @@ public class Kueche {
         leistungsliste = new ArrayList<Bestellung>(0);
     }
     
+    //
     public void bestellungAufnehmen(Bestellung b) {
-        boolean istEingereiht = false;
+        boolean eingereiht = false;
         for(int i = 0; i < bearbeitungsliste.length; i++) {
-            if(bearbeitungsliste[i] == null && !istEingereiht) {
+            if(bearbeitungsliste[i] == null && !eingereiht) {
                 bearbeitungsliste[i] = b;
-                System.out.println("Die Bestellung von Tisch " + (b.auftraggeberGeben()).tischNummerGeben() + " wurde erfolgreich auf dem " + (i + 1) + ". Platz eingereit");
-                istEingereiht = !istEingereiht;
-            } else {
-                if (i == (bearbeitungsliste.length - 1) && !istEingereiht) {
-                    System.out.println("Die Warteschlange ist voll!");
-                }
+                eingereiht = !eingereiht;
             }
         }
     }
     
-    public void bestellungBearbeitenManuell(Tisch t) {
+    //
+    public void bestellungBearbeiten(Tisch t) {
         for(int i = 0; i<bearbeitungsliste.length; i++) {
             if(bearbeitungsliste[i] != null && bearbeitungsliste[i].auftraggeberGeben() == t) {
                 t.zustandSetzen(3);
@@ -43,6 +40,7 @@ public class Kueche {
         }
     }
     
+    //
     public int anzahlBestellungenGeben() {
         int anz = 0;
         for(int i = 0; i < bearbeitungsliste.length; i++) {
@@ -58,10 +56,12 @@ public class Kueche {
         return anz;
     }
     
+    //
     public Bestellung[] ausstehendeBestellungenGeben() {
         return bearbeitungsliste;
     }
     
+    //
     public double gewinnGeben() {
         double gewinn = 0;
         for (int i = 0; i<leistungsliste.size(); i++) {
