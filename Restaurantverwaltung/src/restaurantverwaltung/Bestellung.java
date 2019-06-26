@@ -55,16 +55,6 @@ public class Bestellung {
         return bestellID;
     }
     
-//    public int bearbeitungsZeitGeben() 
-//    {
-//        int bearbeitungszeit = 0;
-//        for (int i = 0; i < auswahl.length; i++) 
-//        {
-//            bearbeitungszeit = bearbeitungszeit + auswahl[i].zubereitungsZeitGeben();
-//        }
-//        return bearbeitungszeit;
-//    }
-    
     public String[] alleDatenGeben() {
         String[] s = new String[auswahl.length + 1];
         s[0] = ("Bestellung " + bestellID + " von Tisch " + auftraggeber.tischNummerGeben());

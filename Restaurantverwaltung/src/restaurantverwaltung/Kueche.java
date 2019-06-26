@@ -5,7 +5,6 @@ import java.util.ArrayList;
  *
  * @author Thomas Weber
  * nur noch überarbeiten
- * 1. Clock????????
  */
 public class Kueche {
     
@@ -35,7 +34,6 @@ public class Kueche {
     public void bestellungBearbeitenManuell(Tisch t) {
         for(int i = 0; i<bearbeitungsliste.length; i++) {
             if(bearbeitungsliste[i] != null && bearbeitungsliste[i].auftraggeberGeben() == t) {
-                //Clock ?????????????
                 t.zustandSetzen(3);
                 leistungsliste.add(bearbeitungsliste[i]);
                 for(int j = i; (j+1) < bearbeitungsliste.length; j++) {

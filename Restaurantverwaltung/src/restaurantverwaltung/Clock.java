@@ -9,9 +9,9 @@ package restaurantverwaltung;
 public class Clock extends Thread {
     
     public int i = 0;
-
-    public void run(int dauer){
-        while(i < dauer){
+    
+    public void run(int j){
+        while(i < j){
             try{
                 i++;
                 sleep(100);
