@@ -114,17 +114,6 @@ public class Restaurant {
     }
     
     //
-    public String[] inhaltUnbearbeiteteBestellungGeben(int i) {
-        Bestellung[] b = k.ausstehendeBestellungenGeben();
-        for(int j = 0; j < b.length; j++) {
-            if (b[j].auftraggeberGeben().tischNummerGeben() == i) {
-                return b[j].alleDatenGeben();
-            }
-        }
-        return null;
-    }
-    
-    //
     public int tischzahlGeben() {
         return t.length;
     }
@@ -149,14 +138,7 @@ public class Restaurant {
 
     //
     public String[] bestellungenInBearbeitungGeben(){
-       Bestellung[] b = k.ausstehendeBestellungenGeben();
-       String[] s = new String[b.length];
-       for(int i = 0; i < s.length; i++) {
-           if(b[i] != null){
-               s[i] = ("Bestellung " + b[i].bestellIDGeben() + " von Tisch " + b[i].auftraggeberGeben().tischNummerGeben() + " ist Eingereiht");
-           }
-       }
-       return s;
+       return k.bearbeitungslisteGeben();
     }
     
     //
@@ -200,6 +182,18 @@ public class Restaurant {
             }
         }
         einnahmen[einnahmen.length-1] = k.gewinnGeben();
+    }
+    
+    public String[] abgeschlosseneBestellungenGeben() {
+        return k.leistungslisteGeben();
+    }
+    
+    public int bestellungsZahlGeben() {
+        return k.anzahlBestellungenGeben();
+    }
+    
+    public String[] bestellungGeben(int i) {
+        return k.bestellungsInhaltGeben(i);
     }
     
 }

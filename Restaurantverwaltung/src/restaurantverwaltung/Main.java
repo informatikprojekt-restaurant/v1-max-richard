@@ -18,10 +18,14 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int tz = Integer.parseInt(JOptionPane.showInputDialog("Gib die Anzahl der Tische - zwischen 1 und 10 -  an, die im Restaurant stehen sollen an: "));
-        while (tz<1 || tz>10){
-            JOptionPane.showMessageDialog(null, "Die Zahl war unpassend!");
-            tz = Integer.parseInt(JOptionPane.showInputDialog("Gib die Anzahl der Tische - zwischen 1 und 10 -  an, die im Restaurant stehen sollen an: "));
+        int tz;
+        while(true) {
+            try {
+                tz = Integer.parseInt(JOptionPane.showInputDialog("Gib die Anzahl der Tische - zwischen 1 und 10 -  an, die im Restaurant stehen sollen an: "));
+                break;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Die Eingabe war unpassend!");
+            }
         }
         Restaurant r = new Restaurant(tz, new double[0]);
         Oberflaeche o = new Oberflaeche(r);

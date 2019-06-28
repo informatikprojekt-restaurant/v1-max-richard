@@ -36,6 +36,7 @@ public class Kueche {
                 for(int j = i; (j+1) < bearbeitungsliste.length; j++) {
                     bearbeitungsliste[j] = bearbeitungsliste[j+1];
                 }
+                bearbeitungsliste[bearbeitungsliste.length-1] = null;
             }            
         }
     }
@@ -57,17 +58,51 @@ public class Kueche {
     }
     
     //
-    public Bestellung[] ausstehendeBestellungenGeben() {
-        return bearbeitungsliste;
-    }
-    
-    //
     public double gewinnGeben() {
         double gewinn = 0;
         for (int i = 0; i<leistungsliste.size(); i++) {
             gewinn = gewinn + leistungsliste.get(i).bestellungsPreisGeben();
         }
         return gewinn;
+    }
+    
+    //
+    public String[] leistungslisteGeben() {
+        String[] s = new String[leistungsliste.size() + 1];
+        s[0] = ("Bearbeitete Bestellungen:");
+        for(int i = 0; i < leistungsliste.size(); i++) {
+            if(leistungsliste.get(leistungsliste.size() - (i + 1)) != null) {
+                s[i + 1] = ("Bestellung " + leistungsliste.get(leistungsliste.size() - (i + 1)).bestellIDGeben() + " von Tisch " + leistungsliste.get(leistungsliste.size() - (i + 1)).auftraggeberGeben().tischNummerGeben());
+            }
+        }
+        return s;
+    }
+    
+    public String[] bearbeitungslisteGeben() {
+        String[] s = new String[bearbeitungsliste.length + 1];
+        s[0] = ("Unbearbeitete Bestellungen:");
+        for(int i = 0; i < bearbeitungsliste.length; i++) {
+            if(bearbeitungsliste[i] != null){
+                s[i + 1] = ("Bestellung " + bearbeitungsliste[i].bestellIDGeben() + " von Tisch " + bearbeitungsliste[i].auftraggeberGeben().tischNummerGeben());
+            }
+        }
+        return s;
+    }
+    
+    public String[] bestellungsInhaltGeben(int i) {
+        for (int j = 0; j < bearbeitungsliste.length; j++) {
+            if (bearbeitungsliste[j] != null) {
+                if (bearbeitungsliste[j].bestellIDGeben() == i) {
+                    return bearbeitungsliste[j].alleDatenGeben();
+                }
+            }
+        }
+        for (int j = 0; j < leistungsliste.size(); j++) {
+            if (leistungsliste.get(j).bestellIDGeben() == i) {
+                return leistungsliste.get(j).alleDatenGeben();
+            }
+        }
+        return new String[0];
     }
     
 }

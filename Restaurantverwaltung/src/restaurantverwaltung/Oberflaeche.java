@@ -36,6 +36,7 @@ public class Oberflaeche {
     private JList<String[]> jl1;
     private JList<String[]> jl2;
     private JList<String[]> jl3;
+    private JList<String[]> jl4;
     private JLabel[] l;
     private JButton b1;
     private JButton b2;
@@ -50,7 +51,7 @@ public class Oberflaeche {
         //neues Fenster
         f1 = new JFrame("Restaurant Simulation");
         f1.setVisible(true);
-        f1.setBounds(500,500,1050,1050);
+        f1.setBounds(500,500,1280,960);
         f1.setLocationRelativeTo(null);
             
         //neue Textfelder
@@ -58,6 +59,8 @@ public class Oberflaeche {
         
         jl1= new JList(r.besetzteStuehleGeben());
         jl2= new JList(r.bestellungenInBearbeitungGeben());
+        jl3 = new JList(new String[0]);
+        jl4 = new JList(r.abgeschlosseneBestellungenGeben());
         for(int i = 0; i < l.length; i++) {
             l[i]= new JLabel();
         }
@@ -70,7 +73,7 @@ public class Oberflaeche {
         l[6].setText("Grün:   Tisch ist besetzt und die Bestellung wurde bearbeitet");
         
         //neue Knöpfe
-        b1= new JButton("Inhalt Bestellungen Anzeigen");
+        b1= new JButton("Bestellungsinhalt Anzeigen");
         b2 = new JButton("Sequenz abschließen");
         b = new MyButton[r.tischzahlGeben()];
         
@@ -82,6 +85,8 @@ public class Oberflaeche {
         f1.add(p1);
         p1.add(jl1);
         p1.add(jl2);
+        p1.add(jl3);
+        p1.add(jl4);
         for(int i = 0; i < l.length; i++) {
             p1.add(l[i]);
         }
@@ -141,17 +146,21 @@ public class Oberflaeche {
         b2.setBounds(250, 400, 250, 250);
         jl1.setBounds(250, 650, 250, 250);
         jl2.setBounds(500, 400, 250, 250);
-        l[0].setBounds(750, 400, 250, 250);
-        l[1].setBounds(750, 650, 250, 250);
-        l[2].setBounds(500, 650, 250, 250);
-        l[3].setBounds(0, 915, 500, 25);
-        l[4].setBounds(0, 930, 500, 25);
-        l[5].setBounds(0, 945, 500, 25);
-        l[6].setBounds(0, 960, 500, 25);
+        jl3.setBounds(0,650,250,250);
+        jl4.setBounds(1000, 0, 250, 900);
+        l[0].setBounds(500, 650, 500, 75);
+        l[1].setBounds(500, 725, 500, 75);
+        l[2].setBounds(750, 400, 250, 250);
+        l[3].setBounds(500, 800, 500, 25);
+        l[4].setBounds(500, 825, 500, 25);
+        l[5].setBounds(500, 850, 500, 25);
+        l[6].setBounds(500, 875, 500, 25);
         
         //Rahmenlinien festlegen
         jl1.setBorder(new LineBorder(Color.BLACK));
         jl2.setBorder(new LineBorder(Color.BLACK));
+        jl3.setBorder(new LineBorder(Color.BLACK));
+        jl4.setBorder(new LineBorder(Color.BLACK));
         l[0].setBorder(new LineBorder(Color.BLACK));
         l[1].setBorder(new LineBorder(Color.BLACK));
         l[2].setBorder(new LineBorder(Color.BLACK));
@@ -159,35 +168,52 @@ public class Oberflaeche {
         //Knopffunktionen setzen
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int i = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie die nummer des Tisches, welcher die Bestellung aufgegeben hat an: "));
-                if(i <= r.tischzahlGeben() && r.tischGeben(i-1).zustandGeben() == 2){
-                    jl3 = new JList(r.inhaltUnbearbeiteteBestellungGeben(i));
-                    p1.add(jl3);
-                    jl3.setBounds(0,650,250,250);
-                    jl3.setBorder(new LineBorder(Color.BLACK));
-                } else {
-                    JOptionPane.showMessageDialog(null, "Die Tischnummer oder die Bestellung existieren nicht!");
+                int i;
+                try {
+                    i = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie die nummer der Bestellung, deren Inhalt sie sehen wollen an: "));    
+                    if (i <= r.bestellungsZahlGeben()) {
+                        jl3.setVisible(false);
+                        jl3 = new JList(r.bestellungGeben(i));
+                        p1.add(jl3);
+                        jl3.setBounds(0,650,250,250);
+                        jl3.setBorder(new LineBorder(Color.BLACK));
+                        p1.repaint();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Es ist ein Fehler aufgetreten.");
+                    }
+                } catch (Exception a) {
+                    JOptionPane.showMessageDialog(null, "Es ist ein Fehler aufgetreten.");
                 }
             }
         });
         
         b2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(Integer.parseInt(JOptionPane.showInputDialog("Geben Sie 1 ein, wenn Sie die Sequenz wirklich beenden wollen: ")) == 1) {
-                    int i = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie entweder 1 ein, wenn Sie das Programm neu starten wollen aber die bisherigen Einnahmen speichern wollen oder 2, wenn Sie das Programm beenden wollen: "));
-                    while (i!=1 && i != 2) {
-                        i = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie entweder 1 ein, wenn Sie eine neue Sequenz mit den bisherigen Einnahmen starten wollen oder 2, wenn Sie das Programm beenden wollen: "));
-                    }
-                    r.alleProzesseAbschließen();
-                    JOptionPane.showMessageDialog(null, "Die Einnahmen der letzten (" + r.sequenzAnzahlGeben() + ".) Sequenz liegen bei " + r.sequenzEinnahmenGeben() + "€! Die Gesamteinnahmen liegen bei " + r.gesamtEinnahmenGeben() + "€!");
-                        switch(i-1) {
-                            case 0:
-                                r = new Restaurant(r.tischzahlGeben(), r.einnahmenListeGeben());
-                                break;
-                            case 1:
-                                System.exit(0);
-                                break;
+                int i;
+                boolean b = true;
+                while (b) {
+                    try {
+                        i = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie 0 ein, wenn Sie doch nicht beenden wollen, 1, wenn Sie die Sequenz abschließen wollen und eine neue Sequenz mit dem selben Restaurant starten wollen und 2, wenn Sie das Programm beenden wollen: "));
+                        if (i<3 && i>-1) {
+                            switch(i) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    r.alleProzesseAbschließen();
+                                    JOptionPane.showMessageDialog(null, "Die Einnahmen der letzten (" + r.sequenzAnzahlGeben() + ".) Sequenz liegen bei " + r.sequenzEinnahmenGeben() + "€! Die Gesamteinnahmen liegen bei " + r.gesamtEinnahmenGeben() + "€!");
+                                    r = new Restaurant (r.tischzahlGeben(), r.einnahmenListeGeben());
+                                    break;
+                                case 2:
+                                    r.alleProzesseAbschließen();
+                                    JOptionPane.showMessageDialog(null, "Die Einnahmen der letzten (" + r.sequenzAnzahlGeben() + ".) Sequenz liegen bei " + r.sequenzEinnahmenGeben() + "€! Die Gesamteinnahmen liegen bei " + r.gesamtEinnahmenGeben() + "€!");
+                                    System.exit(0);
+                                    break;
+                            }
+                            break;
                         }
+                    } catch (Exception a) {
+                        JOptionPane.showMessageDialog(null, "Es ist ein Fehler aufgetreten.");
+                    }
                 }
             }
         });
@@ -204,8 +230,12 @@ public class Oberflaeche {
         jl2= new JList(r.bestellungenInBearbeitungGeben());
         jl2.setBounds(500, 400, 250, 250);
         jl2.setBorder(new LineBorder(Color.BLACK));
-        l[0].setText("Bruttoeinnahmen: " + r.sequenzAnzahlGeben() + ". Sequenz: " + r.sequenzEinnahmenGeben() + "€");
-        l[1].setText("Bruttoeinnahmen: " + r.sequenzAnzahlGeben() + " Sequenz(en): " + r.gesamtEinnahmenGeben() + "€");
+        jl4.setVisible(false);
+        jl4 = new JList(r.abgeschlosseneBestellungenGeben());
+        jl4.setBounds(1000, 0, 250, 900);
+        jl4.setBorder(new LineBorder(Color.GRAY));
+        l[0].setText("Einnahmen: " + r.sequenzAnzahlGeben() + ". Sequenz: " + r.sequenzEinnahmenGeben() + "€");
+        l[1].setText("Einnahmen: " + r.sequenzAnzahlGeben() + " Sequenz(en): " + r.gesamtEinnahmenGeben() + "€");
         
         for(int i = 0; i<r.tischzahlGeben(); i++) {
             switch(r.tischGeben(i).zustandGeben()){
@@ -226,6 +256,7 @@ public class Oberflaeche {
         
         p1.add(jl1);
         p1.add(jl2);
+        p1.add(jl4);
         p1.add(l[0]);
         p1.add(l[1]);
         
