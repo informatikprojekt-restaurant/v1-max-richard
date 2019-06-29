@@ -3,8 +3,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Thomas Weber
- * nur noch überarbeiten
+ * @author Max Demel
  */
 public class Kueche {
     

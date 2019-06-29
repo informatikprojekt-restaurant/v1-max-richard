@@ -3,8 +3,6 @@ package restaurantverwaltung;
 /**
  *
  * @author Thomas Weber
- * evtl überarbeiten 
- * clock ???????????
  */
 public class Clock extends Thread {
     

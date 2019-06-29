@@ -12,23 +12,19 @@ import javax.swing.*;
 /**
  *
  * @author Max Demel, Thomas Weber
- * nur noch überarbeiten
- * evtl zusätzliche funktionen
- * freie wahl der kundenzahl
- * freie wahl der Bestellungsinhalte
  */
 public class Oberflaeche {
     
     public class MyButton extends JButton{
-            int tischNr;
-            public MyButton(int nr, String name){
-                super(name);
-                tischNr = nr;
-            }
-        
-            public int getTischNr(){
-                return tischNr;
-            }
+        int tischNr;
+        public MyButton(int nr, String name){
+            super(name);
+            tischNr = nr;
+        }
+
+        public int getTischNr(){
+            return tischNr;
+        }
     }
     
     private Restaurant r;
@@ -49,7 +45,7 @@ public class Oberflaeche {
         r = rs;
         
         //neues Fenster
-        f1 = new JFrame("Restaurant Simulation");
+        f1 = new JFrame("Restaurantmanagement");
         f1.setVisible(true);
         f1.setBounds(500,500,1280,960);
         f1.setLocationRelativeTo(null);
@@ -57,8 +53,8 @@ public class Oberflaeche {
         //neue Textfelder
         l = new JLabel[7];
         
-        jl1= new JList(r.besetzteStuehleGeben());
-        jl2= new JList(r.bestellungenInBearbeitungGeben());
+        jl1 = new JList(r.besetzteStuehleGeben());
+        jl2 = new JList(r.bestellungenInBearbeitungGeben());
         jl3 = new JList(new String[0]);
         jl4 = new JList(r.abgeschlosseneBestellungenGeben());
         for(int i = 0; i < l.length; i++) {
@@ -201,7 +197,7 @@ public class Oberflaeche {
                                 case 1:
                                     r.alleProzesseAbschließen();
                                     JOptionPane.showMessageDialog(null, "Die Einnahmen der letzten (" + r.sequenzAnzahlGeben() + ".) Sequenz liegen bei " + r.sequenzEinnahmenGeben() + "€! Die Gesamteinnahmen liegen bei " + r.gesamtEinnahmenGeben() + "€!");
-                                    r = new Restaurant (r.tischzahlGeben(), r.einnahmenListeGeben());
+                                    r.neueSequenz();
                                     break;
                                 case 2:
                                     r.alleProzesseAbschließen();

@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package restaurantverwaltung;
+
 import java.util.Random;
 
 /**
  *
- * @author Thomas Weber
- * nur noch überarbeiten
+ * @author Sina Lemke
  */
 public class Restaurant {
     
@@ -19,7 +14,7 @@ public class Restaurant {
     private Random number;
     private double[] einnahmen;
     
-    public Restaurant(int tz, double[] e) {
+    public Restaurant(int tz) {
         speisekarte = new Angebot[51];
         t = new Tisch[tz];
         k = new Kueche(t.length);
@@ -28,7 +23,10 @@ public class Restaurant {
         for(int i = 0; i < t.length; i++) {
             t[i] = new Tisch((number.nextInt(7) + 3), (i + 1));
         }
-        
+        /**
+         * Speisekarte:
+         * @author Katharina Lainer
+         */
         speisekarte[0] = new Angebot( "Pizza Margherita", 1, 5.70);
         speisekarte[1] = new Angebot("Pizza Salami", 2, 6.50);
         speisekarte[2] = new Angebot("Pizza Funghi", 3, 6.30);
@@ -81,10 +79,8 @@ public class Restaurant {
         speisekarte[49] = new Angebot("Chardonnay 0.2l", 50, 3.90);
         speisekarte[50] = new Angebot("Heilbronner Rotwein 0.2l", 51, 4.50);
         
-        einnahmen = new double[e.length + 1];
-        for (int i = 0; i<e.length;i++) {
-            einnahmen[i] = e[i];
-        }
+        einnahmen = new double[1];
+        
         
     }
     
@@ -194,6 +190,14 @@ public class Restaurant {
     
     public String[] bestellungGeben(int i) {
         return k.bestellungsInhaltGeben(i);
+    }
+    
+    public void neueSequenz() {
+        double[] einnahmenNeu = new double[einnahmen.length + 1];
+        for (int i = 0; i<einnahmen.length;i++) {
+            einnahmenNeu[i] = einnahmen[i];
+        }
+        einnahmen = einnahmenNeu;
     }
     
 }

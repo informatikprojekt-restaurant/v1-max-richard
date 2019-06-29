@@ -2,8 +2,7 @@ package restaurantverwaltung;
 
 /**
  *
- * @author Thomas Weber
- * nur noch überarbeiten
+ * @author Richard Wimmer
  */
 public class Angebot {
     
