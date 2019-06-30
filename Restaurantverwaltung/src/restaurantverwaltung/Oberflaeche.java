@@ -1,5 +1,6 @@
 package restaurantverwaltung;
 
+//Importe
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,24 +10,29 @@ import java.awt.event.*;
 import javax.swing.border.LineBorder;
 import javax.swing.JList;
 import javax.swing.*;
+
 /**
  *
  * @author Max Demel, Thomas Weber
  */
+
 public class Oberflaeche {
     
+    //MyButtons bekommen die Tischnummern zugewiesen, da sie die Zustände der Tische so verwalten können
     public class MyButton extends JButton{
         int tischNr;
         public MyButton(int nr, String name){
             super(name);
             tischNr = nr;
         }
-
+        
+        //Gibt die Tischnummer, die dem MyButton zugewiesen wurde zurück
         public int getTischNr(){
             return tischNr;
         }
     }
     
+    //Attribute
     private Restaurant r;
     private JFrame f1;
     private JList<String[]> jl1;
@@ -39,6 +45,7 @@ public class Oberflaeche {
     private MyButton[] b;
     private JPanel p1;
     
+    //Konstruktor
     public Oberflaeche(Restaurant rs) {
         
         //Restaurant speichern
@@ -51,8 +58,11 @@ public class Oberflaeche {
         f1.setLocationRelativeTo(null);
             
         //neue Textfelder
+        
+        //JLabels (=einzeilige Textfelder)
         l = new JLabel[7];
         
+        //JLists (=mehrzeilige Textfelder) werden mit Text erstellt
         jl1 = new JList(r.besetzteStuehleGeben());
         jl2 = new JList(r.bestellungenInBearbeitungGeben());
         jl3 = new JList(new String[0]);
@@ -60,9 +70,15 @@ public class Oberflaeche {
         for(int i = 0; i < l.length; i++) {
             l[i]= new JLabel();
         }
-        //Texte setzen
-        l[0].setText("Einnahmen des " + r.sequenzAnzahlGeben() + ". Tages: " + r.sequenzEinnahmenGeben() + "€");
-        l[1].setText("Einnahmen von " + r.sequenzAnzahlGeben() + " Tag(en): " + r.gesamtEinnahmenGeben() + "€");
+        
+        //Texte der JLabels setzen
+        //Gibt die Einnahmen der Sequenz aus
+        l[0].setText("Einnahmen des " + r.sequenzAnzahlGeben() + ". Sequenz: " + r.sequenzEinnahmenGeben() + "€");
+        //Gibt die Einnahmen aller Sequenzen aus
+        l[1].setText("Einnahmen von " + r.sequenzAnzahlGeben() + " Sequenz(en): " + r.gesamtEinnahmenGeben() + "€");
+        //Gibt das Protokoll, also die Zustandsänderungen der tische aus
+        l[2].setText("Protokoll");
+        //Legende, welche den Farben der "MyButton"s die jeweiligen Zustände für die Tische zuordnet
         l[3].setText("Grau:   Tisch ist nicht besetzt und hat keine Bestellung aufgegeben");
         l[4].setText("Rot:    Tisch ist besetzt hat aber noch keine Bestellung aufgegeben");
         l[5].setText("Orange: Tisch ist besetzt und hat eine Bestellung aufgegeben");
@@ -87,49 +103,9 @@ public class Oberflaeche {
             p1.add(l[i]);
         }
         p1.add(b1);
-        p1.add(b2);
-        
-        //Knöpfe für manuelle Steuerung
-        for(int i = 0; i<r.tischzahlGeben(); i++) {
-            b[i] = new MyButton(i, "Tisch " + r.tischGeben(i).tischNummerGeben());
-            p1.add(b[i]);
-            if (i%2==0) {
-                b[i].setBounds((i/2*200), 0, 185, 185);
-            } else {
-                b[i].setBounds(((i-1)/2*200), 200, 185, 185);
-            }
-            b[i].setBackground(Color.GRAY);
-            MyButton button = b[i];
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    switch(r.tischGeben(button.getTischNr()).zustandGeben()){
-                        case 0:
-                            r.kundenKommen(button.getTischNr());
-                            button.setBackground(Color.RED);
-                            l[2].setText(r.tischGeben(button.getTischNr()).gaesteZahlGeben() + " Kunden haben sich an Tisch " + (button.getTischNr() + 1) + " gesetzt!");
-                            break;
-                        case 1:
-                            r.bestellungErstellen(button.getTischNr());
-                            button.setBackground(Color.ORANGE);
-                            l[2].setText("Tisch " + (button.getTischNr() + 1) + " hat eine Bestellung eingereicht!");
-                            break;
-                        case 2:
-                            r.bearbeiteBestellung(button.getTischNr());
-                            button.setBackground(Color.GREEN);
-                            l[2].setText("Die Bestellung von Tisch " + (button.getTischNr() + 1) + " wurde bearbeitet!");
-                            break;
-                        case 3:
-                            r.kundenGehen(button.getTischNr());
-                            button.setBackground(Color.GRAY);
-                            l[2].setText("Die Kunden von Tisch " + (button.getTischNr() + 1) + " sind gegangen!");
-                            break;
-                    }
-                }
-            });
-            b[i] = button;
-        }      
+        p1.add(b2);    
          
-        //farbe setzen
+        //Farben setzen
         b1.setBackground(Color.GRAY);
         b2.setBackground(Color.GRAY);
         l[3].setForeground(Color.GRAY);
@@ -162,6 +138,8 @@ public class Oberflaeche {
         l[2].setBorder(new LineBorder(Color.BLACK));
         
         //Knopffunktionen setzen
+        
+        //Knopf, welcher den Inhalt einer, über ihre ID aufgerufene Bestellung ausgibt
         b1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int i;
@@ -183,6 +161,7 @@ public class Oberflaeche {
             }
         });
         
+        //Knopf, welcher die Sequenz oder sogar das ganze Programm beendet
         b2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int i;
@@ -214,48 +193,83 @@ public class Oberflaeche {
             }
         });
         
+        //Den Knöpfen für die Zustandsänderung der Tische ihre Positionen und Funktionen zuweisen
+        for(int i = 0; i<r.tischzahlGeben(); i++) {
+            b[i] = new MyButton(i, "Tisch " + r.tischGeben(i).tischNummerGeben());
+            p1.add(b[i]);
+            if (i%2==0) {
+                b[i].setBounds((i/2*200), 0, 185, 185);
+            } else {
+                b[i].setBounds(((i-1)/2*200), 200, 185, 185);
+            }
+            b[i].setBackground(Color.GRAY);
+            MyButton button = b[i];
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    switch(r.tischGeben(button.getTischNr()).zustandGeben()){
+                        case 0:
+                            r.kundenKommen(button.getTischNr());
+                            button.setBackground(Color.RED);
+                            l[2].setText(r.tischGeben(button.getTischNr()).gaesteZahlGeben() + " Kunden haben sich an Tisch " + (button.getTischNr() + 1) + " gesetzt!");
+                            break;
+                        case 1:
+                            r.bestellungErstellen(button.getTischNr());
+                            button.setBackground(Color.ORANGE);
+                            l[2].setText("Tisch " + (button.getTischNr() + 1) + " hat eine Bestellung eingereicht!");
+                            break;
+                        case 2:
+                            r.bearbeiteBestellung(button.getTischNr());
+                            button.setBackground(Color.GREEN);
+                            l[2].setText("Bestellung von Tisch " + (button.getTischNr() + 1) + " wurde bearbeitet!");
+                            break;
+                        case 3:
+                            r.kundenGehen(button.getTischNr());
+                            button.setBackground(Color.GRAY);
+                            l[2].setText("Die Kunden von Tisch " + (button.getTischNr() + 1) + " sind gegangen!");
+                            break;
+                    }
+                }
+            });
+            b[i] = button;
+        } 
+        
+        //Festlegen, dass wenn das Fenster geschlossen wird, das Programm ebenfalls beendet wird
         f1.setDefaultCloseOperation(f1.EXIT_ON_CLOSE);
     }
     
+    //Methoden
+    
+    //Aktuallisiert alle Inhalte der Oberfläche
     public void aktuallisieren() {
+        
+        //Aktuallisieren der Anzeige für Besetzten Stühle pro Tisch
         jl1.setVisible(false);
         jl1= new JList(r.besetzteStuehleGeben());
         jl1.setBounds(250, 650, 250, 250);
         jl1.setBorder(new LineBorder(Color.BLACK));
+        
+        //Aktuallisieren der Anzeige für die Bestellungen in Bearbeitung
         jl2.setVisible(false);
         jl2= new JList(r.bestellungenInBearbeitungGeben());
         jl2.setBounds(500, 400, 250, 250);
         jl2.setBorder(new LineBorder(Color.BLACK));
+        
+        //Aktuallisierung der Anzeige für die Bestellungen welche bereits Bearbeitet wurden
         jl4.setVisible(false);
         jl4 = new JList(r.abgeschlosseneBestellungenGeben());
         jl4.setBounds(1000, 0, 250, 900);
         jl4.setBorder(new LineBorder(Color.GRAY));
+        
+        //Aktuallisieren der Textfelder, welche die Einnahmen ausgeben
         l[0].setText("Einnahmen: " + r.sequenzAnzahlGeben() + ". Sequenz: " + r.sequenzEinnahmenGeben() + "€");
         l[1].setText("Einnahmen: " + r.sequenzAnzahlGeben() + " Sequenz(en): " + r.gesamtEinnahmenGeben() + "€");
         
-        for(int i = 0; i<r.tischzahlGeben(); i++) {
-            switch(r.tischGeben(i).zustandGeben()){
-                case 0:
-                    b[i].setBackground(Color.GRAY);
-                    break;
-                case 1:
-                    b[i].setBackground(Color.RED);
-                    break;
-                case 2:
-                    b[i].setBackground(Color.ORANGE);
-                    break;
-                case 3:
-                    b[i].setBackground(Color.GREEN);
-                    break;    
-            }
-        }
-        
+        //Einbauen aller aktuallisierten Elemente
         p1.add(jl1);
         p1.add(jl2);
         p1.add(jl4);
         p1.add(l[0]);
         p1.add(l[1]);
-        
         p1.repaint();
     }
     

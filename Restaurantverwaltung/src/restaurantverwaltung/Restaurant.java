@@ -1,32 +1,42 @@
 package restaurantverwaltung;
 
+//Improte
 import java.util.Random;
 
 /**
  *
  * @author Sina Lemke
  */
+
 public class Restaurant {
     
+    //Attribute
     private Kueche k;
     private Tisch[] t;
     private Angebot[] speisekarte;
     private Random number;
     private double[] einnahmen;
     
+    //Konstruktor
     public Restaurant(int tz) {
+        
         speisekarte = new Angebot[51];
         t = new Tisch[tz];
         k = new Kueche(t.length);
         number = new Random();
+        einnahmen = new double[1];
         
+        //Erstellen der Tische mit zufälligen Stuhlzahlen zwischen 3 und 10
         for(int i = 0; i < t.length; i++) {
             t[i] = new Tisch((number.nextInt(7) + 3), (i + 1));
         }
+        
         /**
          * Speisekarte:
          * @author Katharina Lainer
          */
+        
+        //Array "speisekarte" enthält das Angebot des Restaurants welches im Restaurant erstellt wird gespeichert ist
         speisekarte[0] = new Angebot( "Pizza Margherita", 1, 5.70);
         speisekarte[1] = new Angebot("Pizza Salami", 2, 6.50);
         speisekarte[2] = new Angebot("Pizza Funghi", 3, 6.30);
@@ -78,43 +88,39 @@ public class Restaurant {
         speisekarte[48] = new Angebot("Radler hell/dunkel 0.5l", 49, 3.60);
         speisekarte[49] = new Angebot("Chardonnay 0.2l", 50, 3.90);
         speisekarte[50] = new Angebot("Heilbronner Rotwein 0.2l", 51, 4.50);
-        
-        einnahmen = new double[1];
-        
-        
     }
     
-    //
+    //Methoden
+    
+    //Eine zufällige Anzahl Kunden, welche kleiner als die jeweilige Stuhlzahl des Tisches ist, wird an die "gaesteKommen"-Methode in "Tisch" übergeben
     public void kundenKommen(int tNr) {
         t[tNr].gaesteKommen(number.nextInt(t[tNr].stuhlZahlGeben()-2) + 2);
     }
     
-    //
+    //Der Tisch mit der entsprechenden Tischnummer wird von den Gästen (wenn vorhanden) verlassen
     public void kundenGehen(int tNr) {
         t[tNr].gaesteGehen();
     }
     
-    //
+    //eine neue Bestellung wird, wenn gerade Gäste an dem Tisch sitzen, welche noch nichts bestellt haben, mit dem entsprechenden Auftraggeber erstellt und an die Küche übergeben
     public void bestellungErstellen(int tNr) {
         if(t[tNr].zustandGeben()==1) {
             k.bestellungAufnehmen(new Bestellung(k.anzahlBestellungenGeben(), t[tNr], speisekarte));
-        } else {
-            System.out.println("Es sitzen keine Gaeste an Tisch " + t[tNr].tischNummerGeben());
             
         }
     }
     
-    //
+    //Der zu der übergebenen Tischnummer zugehörige Tisch wird der "bestellungBearbeiten"-Methode in Küche übergeben
     public void bearbeiteBestellung(int tNr) {
         k.bestellungBearbeiten(t[tNr]);
     }
     
-    //
+    //Die Tsichzahl wird zurückgegeben
     public int tischzahlGeben() {
         return t.length;
     }
     
-    //
+    //Der zu dem Index zugehörige Tisch wird zurückgegeben
     public Tisch tischGeben(int i) {
         if(i<t.length){
             return t[i];
@@ -123,7 +129,7 @@ public class Restaurant {
         }
     }
     
-    //
+    //Aus den Methoden "datenGeben" in jedem Tisch wird ein String-Array erstellt und zurückgegeben
     public String[] besetzteStuehleGeben(){
        String[] s = new String[t.length];
        for(int i = 0; i < t.length; i++) {
@@ -132,23 +138,23 @@ public class Restaurant {
        return s;
     }
 
-    //
+    //Die Methode "bearbeitungslisteGeben" in Küche wird zurückgegeben
     public String[] bestellungenInBearbeitungGeben(){
        return k.bearbeitungslisteGeben();
     }
     
-    //
+    //die Einnahmen der jetzigen Sequenz werden als gerundeter double-Wert zurückgegeben
     public double sequenzEinnahmenGeben() {
         einnahmen[einnahmen.length - 1] = k.gewinnGeben();
         return   Math.round(einnahmen[einnahmen.length-1] * 100) / 100.0;
     }
     
-    //
+    //Die Anzahl der Sequenzen wird als int-Wert zurückgegeben
     public int sequenzAnzahlGeben() {
         return einnahmen.length;
     }
     
-    //
+    //Die Einnahmen aus allen bisherigen Sequenzen werden zusammengezählt und zurückgegeben
     public double gesamtEinnahmenGeben() {
         double e = 0;
         einnahmen[einnahmen.length - 1] = k.gewinnGeben();
@@ -158,12 +164,7 @@ public class Restaurant {
         return Math.round(e * 100) / 100.0;
     }
     
-    //
-    public double[] einnahmenListeGeben() {
-        return einnahmen;
-    }
-    
-    //
+    //Bearbeitet alle Tische so lange bis sie in den Ursprungszustand zurückwechseln
     public void alleProzesseAbschließen() {
         for(int i = 0; i<t.length; i++) {
             switch(t[i].zustandGeben()) {
@@ -180,18 +181,22 @@ public class Restaurant {
         einnahmen[einnahmen.length-1] = k.gewinnGeben();
     }
     
+    //Gibt die Methode "leistungslisteGeben" in Küche als String-Array zurück
     public String[] abgeschlosseneBestellungenGeben() {
         return k.leistungslisteGeben();
     }
     
+    //Gibet die Methode "bestellungsZahlGeben" in Küche zurück
     public int bestellungsZahlGeben() {
         return k.anzahlBestellungenGeben();
     }
     
-    public String[] bestellungGeben(int i) {
-        return k.bestellungsInhaltGeben(i);
+    //Gibt die Methode "bestellungsInhaltGeben" in Küche mit der gesuchten BestellungsID als Übergabeparameter zurück 
+    public String[] bestellungGeben(int id) {
+        return k.bestellungsInhaltGeben(id);
     }
     
+    //Erstellt ein neues einnahmen-Array, welches die selben Werte enthält, aber um einen Index länger ist
     public void neueSequenz() {
         double[] einnahmenNeu = new double[einnahmen.length + 1];
         for (int i = 0; i<einnahmen.length;i++) {
